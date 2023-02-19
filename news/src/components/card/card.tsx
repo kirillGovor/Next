@@ -1,19 +1,20 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import { News } from "../../types/cards";
 import { CardActionArea, CardMedia } from "@mui/material";
 
 const NewsCard = ({ news }: { news: News }) => {
-  const { title, author, imageUrl, id, date, content, url } = news;
+  const { title, imageUrl, content, url } = news;
+
+  const styles = {
+    cardsStyles: { maxWidth: 345, height: "100%" },
+  };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={styles.cardsStyles}>
       <CardActionArea>
         <Link href={url} underline="none">
           <CardMedia

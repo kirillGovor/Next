@@ -1,47 +1,67 @@
+"use client";
+
+import ky from "ky";
 import NewsCard from "@/components/card/card";
 import Crashable from "@/components/crashable/crashable";
+import SkeletonNews from "@/components/skeleton/skeleton";
 import { mockCards } from "@/constants";
-import { useEffect, useState } from "react";
 import { News } from "../../types/cards";
 import styles from "./news.module.css";
-import SkeletonNews from "./skeleton";
+import { useEffect, useState } from "react";
 
 const CATEGORY_NAME = "technology";
 const NEWS_URL = "https://inshorts.deta.dev/news";
 
+type newsResponse = {
+  category: string;
+  data: News[];
+  success: boolean;
+};
+
 const News = () => {
   const [news, setNews] = useState<News[]>();
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | boolean>(false);
 
   const fetchData = async () => {
-    const test = await fetch(`${NEWS_URL}?category=${CATEGORY_NAME}`)
-      .then((res) => res.json())
-      .catch((err) => {
-        setError(true);
-        console.error(err);
-      });
+    try {
+      const news: newsResponse = await ky(
+        `${NEWS_URL}?category=${CATEGORY_NAME}`
+      ).json();
 
-    setNews(test?.data);
+      if (news?.success) {
+        setNews(news?.data);
+      }
+    } catch (error: any) {
+      if (error.name === "HTTPError") {
+        const errorInfo = await error.response.json();
+        setError(errorInfo);
+      }
+      setError(error?.message);
+    }
   };
 
   useEffect(() => {
-    fetchData();
+    void fetchData();
   }, []);
 
   if (error) {
-    return <Crashable />;
+    return (
+      <main>
+        <Crashable />
+      </main>
+    );
   }
 
   return (
-    <section className={styles.cards}>
+    <section className={styles.news}>
       {news ? (
-        <>
+        <div className={styles.cards}>
           {news?.map((card: News) => (
             <div key={card.id}>
               <NewsCard news={card} />
             </div>
           ))}
-        </>
+        </div>
       ) : (
         mockCards.map((card: News) => (
           <div key={card.id}>

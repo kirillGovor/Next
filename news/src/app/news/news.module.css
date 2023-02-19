@@ -1,8 +1,14 @@
 .cards {
   display: flex;
-  justify-content: start;
   gap: 20px;
   flex-wrap: wrap;
   padding: 20px;
   align-content: center;
+  max-width: 1116px;
+}
+
+.news {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }

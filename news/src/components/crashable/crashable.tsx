@@ -6,16 +6,12 @@ const Crashable = () => (
   <div className={styles.crashable}>
     <Image
       src="/smth went wrong.png"
-      alt="Picture of the author"
-      width={500}
-      height={500}
+      alt="smth went wrong"
+      width={300}
+      height={300}
     />
     <Typography gutterBottom variant="h5" component="div">
-      Lizard
-    </Typography>
-    <Typography variant="body2" color="text.secondary">
-      Lizards are a widespread group of squamate reptiles, with over 6,000
-      species, ranging across all continents except Antarctica
+      Something went wrong
     </Typography>
   </div>
 );

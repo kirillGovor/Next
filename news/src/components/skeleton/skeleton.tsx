@@ -1,63 +1,33 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
-import Grid from '@mui/material/Grid';
-import Skeleton from '@mui/material/Skeleton';
+import * as React from "react";
+import Typography from "@mui/material/Typography";
+import Skeleton from "@mui/material/Skeleton";
+import { Card, CardActionArea, CardContent } from "@mui/material";
+import { News } from "@/types/cards";
 
-const Image = styled('img')({
-  width: '100%',
-});
-
-function SkeletonChildrenDemo(props: { loading?: boolean }) {
-  const { loading = false } = props;
+const SkeletonNews = ({ news }: { news: News }) => {
+  const { title, content } = news;
 
   return (
-    <div>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box sx={{ margin: 1 }}>
-          {loading ? (
-            <Skeleton variant="circular">
-              <Avatar />
-            </Skeleton>
-          ) : (
-            <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" />
-          )}
-        </Box>
-        <Box sx={{ width: '100%' }}>
-          {loading ? (
-            <Skeleton width="100%">
-              <Typography>.</Typography>
-            </Skeleton>
-          ) : (
-            <Typography>Ted</Typography>
-          )}
-        </Box>
-      </Box>
-      {loading ? (
-        <Skeleton variant="rectangular" width="100%">
-          <div style={{ paddingTop: '57%' }} />
+    <Card sx={{ maxWidth: 345, height: "100%" }}>
+      <CardActionArea>
+        <Skeleton variant="rectangular" sx={{ maxWidth: 345 }}>
+          <div style={{ paddingTop: "57%" }} />
         </Skeleton>
-      ) : (
-        <Image
-          src="https://pi.tedcdn.com/r/talkstar-photos.s3.amazonaws.com/uploads/72bda89f-9bbf-4685-910a-2f151c4f3a8a/NicolaSturgeon_2019T-embed.jpg?w=512"
-          alt=""
-        />
-      )}
-    </div>
+        <CardContent>
+          <Skeleton>
+            <Typography gutterBottom variant="h5" component="div">
+              {title}
+            </Typography>
+          </Skeleton>
+          <Skeleton>
+            <Typography variant="body2" color="text.secondary">
+              {content}
+            </Typography>
+          </Skeleton>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
-}
+};
 
-export default function SkeletonChildren() {
-  return (
-    <Grid container spacing={8}>
-      <Grid item xs>
-        <SkeletonChildrenDemo loading />
-      </Grid>
-      <Grid item xs>
-        <SkeletonChildrenDemo />
-      </Grid>
-    </Grid>
-  );
-}
+export default SkeletonNews;
